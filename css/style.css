@@ -1,0 +1,93 @@
+/* Base and Font Styles */
+html { scroll-behavior: smooth; }
+body { font-family: 'Source Sans Pro', sans-serif; overflow-x: hidden; }
+
+/* Animation On Scroll (AOS) Base Styles */
+[data-aos] {
+    opacity: 0;
+    transition-property: transform, opacity;
+}
+[data-aos][data-aos-easing="ease-out-cubic"] {
+    transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+[data-aos="fade-up"] { transform: translateY(100px); }
+[data-aos="fade-down"] { transform: translateY(-100px); }
+[data-aos="fade-right"] { transform: translateX(-100px); }
+[data-aos="fade-left"] { transform: translateX(100px); }
+[data-aos].aos-animate { opacity: 1; transform: translateZ(0); }
+
+/* ROYAL BLUE THEME STYLES */
+.hero-bg {
+    background-image: linear-gradient(rgba(0, 20, 40, 0.7), rgba(0, 20, 40, 0.7)), url('../images/hero-background.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.text-shadow { text-shadow: 2px 2px 4px rgba(0,0,0,0.4); }
+.btn-hover-effect { transition: all 0.3s ease-in-out; }
+.btn-hover-effect:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+.card-hover-effect { transition: all 0.3s ease-in-out; }
+.card-hover-effect:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); border-color: #3b82f6; }
+.card-hover-effect:hover .arrow-icon { transform: translateX(4px); }
+.arrow-icon { transition: transform 0.3s ease; }
+
+/* Interactive Form Styles */
+.form-step { display: none; }
+.form-step.active { display: block; }
+.progress-bar-fill { transition: width 0.4s ease-in-out; }
+
+/* Iframe Styles */
+.map-iframe { border: 0; }
+
+/* Modal Styles */
+.service-modal { 
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    align-items: center;
+    justify-content: center;
+}
+
+/* Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    transform: translateY(100px);
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+.back-to-top.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Success Stories Section */
+.case-study-card {
+    transition: all 0.3s ease;
+}
+.case-study-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+.results-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #1e40af;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-weight: bold;
+    font-size: 0.875rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Stats Section */
+#stats .count { transition: all 1s ease-out; }
