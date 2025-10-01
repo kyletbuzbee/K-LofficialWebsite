@@ -1,24 +1,27 @@
-// src/components/Layout.tsx
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import Header from './Header';
 import Footer from './Footer';
-import PriceTicker from './PriceTicker';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  // Initialize AOS (Animate On Scroll) library
+  useEffect(() => {
+    AOS.init({
+      duration: 700,
+      once: true,
+      offset: 50,
+    });
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <PriceTicker />
-      <main id="main-content" className="flex-grow">
-        {/* Accessibility Fix: Added id="main-content" to the <main> tag. 
-          This provides a landmark for screen readers and can be used for "skip to content" links.
-        */}
-        {children}
-      </main>
+      <main className="flex-grow">{children}</main>
       <Footer />
     </div>
   );
