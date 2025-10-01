@@ -2,52 +2,52 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  
+ 
   // Image optimization
   images: {
-    domains: ['placehold.co'],
-    formats: ['image/avif', 'image/webp'],
+    domains: ["placehold.co"],
+    formats: ["image/avif", "image/webp"],
   },
 
   // Compiler options
   compiler: {
-    removeConsole: process.env.NODE_ENV === 'production',
+    removeConsole: process.env.NODE_ENV === "production",
   },
-
+ 
   // Environment variables
   env: {
-    SITE_URL: process.env.SITE_URL || 'https://www.klrecycling.com',
+    SITE_URL: process.env.SITE_URL || "https://www.klrecycling.com",
   },
 
   // Headers for security
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: "/(.*)",
         headers: [
           {
-            key: 'X-Frame-Options',
-            value: 'DENY',
+            key: "X-Frame-Options",
+            value: "DENY",
           },
           {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
+            key: "X-Content-Type-Options",
+            value: "nosniff",
           },
           {
-            key: 'Referrer-Policy',
-            value: 'origin-when-cross-origin',
+            key: "Referrer-Policy",
+            value: "origin-when-cross-origin",
           },
         ],
       },
     ];
   },
-
+ 
   // Redirects for old URLs (if migrating from old site)
   async redirects() {
     return [
       {
-        source: '/home',
-        destination: '/',
+        source: "/home",
+        destination: "/",
         permanent: true,
       },
     ];
