@@ -1,5 +1,5 @@
 // src/hooks/useOnScreen.ts
-import { useState, useEffect, RefObject } from 'react';
+import { useState, useEffect, RefObject } from "react";
 
 interface UseOnScreenOptions {
   threshold?: number;
@@ -9,16 +9,12 @@ interface UseOnScreenOptions {
 
 const useOnScreen = (
   ref: RefObject<Element>,
-  options: UseOnScreenOptions = {}
+  options: UseOnScreenOptions = {},
 ): boolean => {
   const [isIntersecting, setIntersecting] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
 
-  const {
-    threshold = 0,
-    rootMargin = '0px',
-    triggerOnce = true
-  } = options;
+  const { threshold = 0, rootMargin = "0px", triggerOnce = true } = options;
 
   useEffect(() => {
     const element = ref.current;
@@ -27,7 +23,7 @@ const useOnScreen = (
     const observer = new IntersectionObserver(
       ([entry]) => {
         const isElementIntersecting = entry.isIntersecting;
-        
+
         if (triggerOnce && hasTriggered) {
           return;
         }
@@ -42,7 +38,7 @@ const useOnScreen = (
       {
         threshold,
         rootMargin,
-      }
+      },
     );
 
     observer.observe(element);

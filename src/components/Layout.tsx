@@ -1,4 +1,5 @@
 import React, { ReactNode, useEffect } from 'react';
+import Script from 'next/script';
 import Header from './Header';
 import Footer from './Footer';
 import AOS from 'aos';
@@ -9,7 +10,6 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  // Initialize AOS (Animate On Scroll) library
   useEffect(() => {
     AOS.init({
       duration: 700,
@@ -23,6 +23,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <Header />
       <main className="flex-grow">{children}</main>
       <Footer />
+      <Script src="//code.tidio.co/your-tidio-key.js" strategy="lazyOnload" />
     </div>
   );
 };

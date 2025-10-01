@@ -1,79 +1,88 @@
-// src/pages/index.tsx
-import React, { FC } from 'react';
-import Link from 'next/link';
-import Head from 'next/head';
-import Image from 'next/image'; // Performance Fix: Using Next.js Image component
-import Layout from '../components/Layout';
-import Testimonials from '../components/Testimonials';
-import AnimatedCounter from '../components/AnimatedCounter';
+import React, { FC } from "react";
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
+import Layout from "@/components/Layout";
+import { allPosts } from "@/data/posts";
 
-const ArrowRightIcon: FC = () => (
-    <svg className="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-);
-
-const HomePage: FC = () => {
+const BlogPage: FC = () => {
   return (
     <Layout>
       <Head>
-        <title>K&L Recycling | Industrial Scrap Metal Partner | Texas & Kansas</title>
-        <meta name="description" content="K&L Recycling is the leading expert in industrial, commercial, and demolition scrap metal management in Texas and Kansas." />
-        {/* SEO Fix: Added Open Graph and Twitter meta tags for social sharing */}
-        <meta property="og:title" content="K&L Recycling | Industrial Scrap Metal Partner" />
-        <meta property="og:description" content="The trusted expert for industrial and commercial scrap metal management." />
-        <meta property="og:image" content="/images/hero-background.jpg" />
-        <meta property="og:url" content="https://www.klrecycling.com" />
-        <meta name="twitter:card" content="summary_large_image" />
+        <title>Blog | K&L Recycling</title>
+        <meta
+          name="description"
+          content="News, insights, and tips from the scrap metal recycling experts at K&L Recycling."
+        />
       </Head>
 
-      <div className="animate-fade-in-up">
-        {/* Hero Section */}
-        <section className="relative text-white bg-gray-800">
-            <Image
-              src="/images/hero-background.jpg"
-              alt="A large crane claw in a scrap yard, representing industrial recycling."
-              layout="fill"
-              objectFit="cover"
-              quality={80}
-              priority // Performance: Preload the hero image
-            />
-            <div className="absolute inset-0 bg-gray-900/60"></div>
-            <div className="relative container mx-auto px-6 py-32 md:py-48 text-center">
-                <h1 className="text-4xl md:text-6xl font-black leading-tight text-shadow">
-                    Your Premier Industrial Recycling Partner
-                </h1>
-                <p className="text-lg md:text-xl max-w-3xl mx-auto mt-6 text-shadow">
-                    For over 50 years, we've delivered reliable, profitable, and safe scrap management solutions.
-                </p>
-                <div className="mt-10">
-                    <Link href="/contact" className="group bg-blue-600 text-white font-bold text-lg py-4 px-10 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 shadow-xl inline-flex items-center">
-                        Get Your Free Quote <ArrowRightIcon />
-                    </Link>
-                </div>
-            </div>
-        </section>
+      <section className="bg-gradient-to-br from-gray-900 to-royal-blue-900 text-white py-20">
+        <div
+          className="container mx-auto px-6 text-center"
+          data-aos="fade-down"
+        >
+          <h1 className="text-4xl md:text-6xl font-black">Our Blog</h1>
+          <p className="text-xl md:text-2xl mt-4 max-w-3xl mx-auto text-blue-100">
+            Industry insights, company news, and helpful tips.
+          </p>
+        </div>
+      </section>
 
-        {/* Stats & Trust Bar */}
-        <section className="bg-gray-900 text-white py-12">
-            <div className="container mx-auto grid sm:grid-cols-3 gap-8 text-center">
-                <div>
-                    <h3 className="text-5xl font-black text-blue-400"><AnimatedCounter target={50} suffix="+" /></h3>
-                    <p className="mt-1 text-gray-400 font-semibold">Years of Service</p>
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {allPosts.map((post, index) => (
+              <Link
+                key={post.slug}
+                href={`/blog/${post.slug}`}
+                className="group block bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300"
+                data-aos="fade-up"
+                data-aos-delay={index * 100}
+              >
+                <div className="relative overflow-hidden">
+                  <Image
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-500"
+                    width={600}
+                    height={384}
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="bg-royal-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                      {post.category}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                    <h3 className="text-5xl font-black text-blue-400"><AnimatedCounter target={500} suffix="+" /></h3>
-                    <p className="mt-1 text-gray-400 font-semibold">Industrial Partners</p>
+                <div className="p-6">
+                  <p className="text-sm text-gray-500 mb-2">{post.date}</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-royal-blue-700 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                  <div className="flex items-center text-royal-blue-600 font-semibold group-hover:text-royal-blue-700">
+                    Read More
+                    <svg
+                      className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </div>
                 </div>
-                <div>
-                    <h3 className="text-5xl font-black text-blue-400"><AnimatedCounter target={10000} separator="," suffix="+" /></h3>
-                    <p className="mt-1 text-gray-400 font-semibold">Tons Processed Annually</p>
-                </div>
-            </div>
-        </section>
-
-        <Testimonials />
-      </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };
 
-export default HomePage;
+export default BlogPage;

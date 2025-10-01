@@ -1,10 +1,6 @@
-import { useEffect } from 'react';
-import Link from 'next/link';
-
-interface Service {
-  title: string;
-  content: string;
-}
+import { useEffect } from "react";
+import Link from "next/link";
+import { Service } from "@/types";
 
 interface ServiceModalProps {
   isOpen: boolean;
@@ -15,31 +11,31 @@ interface ServiceModalProps {
 const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = "hidden";
+      document.body.style.paddingRight = "0px";
     } else {
-      document.body.style.overflow = 'auto';
-      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = "auto";
+      document.body.style.paddingRight = "0px";
     }
 
     return () => {
-      document.body.style.overflow = 'auto';
-      document.body.style.paddingRight = '0px';
+      document.body.style.overflow = "auto";
+      document.body.style.paddingRight = "0px";
     };
   }, [isOpen]);
 
   // Close modal on Escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
+      if (e.key === "Escape") onClose();
     };
 
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
+      document.addEventListener("keydown", handleEscape);
     }
 
     return () => {
-      document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener("keydown", handleEscape);
     };
   }, [isOpen, onClose]);
 
@@ -59,7 +55,10 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
       >
         {/* Animated Gradient Orbs */}
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-royal-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-electric-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-float" style={{animationDelay: '2s'}}></div>
+        <div
+          className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-electric-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-float"
+          style={{ animationDelay: "2s" }}
+        ></div>
       </div>
 
       {/* Enhanced Modal Panel */}
@@ -72,7 +71,7 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
           <div className="bg-white rounded-t-2xl p-8">
             <div className="flex justify-between items-start mb-6">
               <div className="flex-1">
-                <h3 
+                <h3
                   id="modal-title"
                   className="text-4xl font-black text-gray-900 mb-3 leading-tight"
                 >
@@ -80,13 +79,23 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
                 </h3>
                 <div className="w-20 h-1.5 bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 rounded-full"></div>
               </div>
-              <button 
+              <button
                 onClick={onClose}
                 aria-label="Close modal"
                 className="flex-shrink-0 w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-xl flex items-center justify-center transition-all duration-300 transform hover:scale-110 hover:rotate-90 group ml-6"
               >
-                <svg className="w-6 h-6 text-gray-500 group-hover:text-gray-700 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                <svg
+                  className="w-6 h-6 text-gray-500 group-hover:text-gray-700 transition-colors"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
                 </svg>
               </button>
             </div>
@@ -96,7 +105,7 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
         {/* Enhanced Content Area */}
         <div className="p-8 max-h-[60vh] overflow-y-auto">
           {/* Security: In a real app with CMS, sanitize HTML content */}
-          <div 
+          <div
             className="prose prose-lg max-w-none text-gray-700"
             dangerouslySetInnerHTML={{ __html: service.content }}
           />
@@ -107,31 +116,55 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
           <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-4">
               <div className="w-12 h-12 bg-gradient-to-br from-royal-blue-600 to-electric-blue-600 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                <svg
+                  className="w-6 h-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
                 </svg>
               </div>
               <div>
-                <p className="font-semibold text-gray-900">Ready to get started?</p>
-                <p className="text-sm text-gray-600">Get your custom quote today</p>
+                <p className="font-semibold text-gray-900">
+                  Ready to get started?
+                </p>
+                <p className="text-sm text-gray-600">
+                  Get your custom quote today
+                </p>
               </div>
             </div>
-            
+
             <div className="flex space-x-4">
-              <button 
+              <button
                 onClick={onClose}
                 className="px-8 py-3 bg-gray-200 text-gray-800 font-semibold rounded-xl hover:bg-gray-300 transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg hover:shadow-xl"
               >
                 Close
               </button>
-              <Link 
-                href="/contact#quote-tool" 
+              <Link
+                href="/contact#quote-tool"
                 onClick={onClose}
                 className="px-8 py-3 bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 text-white font-semibold rounded-xl hover:shadow-glow transition-all duration-300 transform hover:-translate-y-0.5 shadow-lg flex items-center group"
               >
                 Get a Quote
-                <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                <svg
+                  className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
                 </svg>
               </Link>
             </div>

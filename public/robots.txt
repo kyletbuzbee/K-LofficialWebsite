@@ -1,0 +1,14 @@
+# robots.txt for K&L Recycling
+
+User-agent: *
+Allow: /
+
+# Disallow admin or sensitive areas (if any)
+Disallow: /api/
+Disallow: /admin/
+
+# Sitemap location
+Sitemap: https://www.klrecycling.com/sitemap.xml
+
+# Crawl-delay (optional, adjust as needed)
+Crawl-delay: 1

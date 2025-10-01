@@ -1,21 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface LoadingSpinnerProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  color?: 'blue' | 'white' | 'gray' | 'electric';
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  color?: "blue" | "white" | "gray" | "electric";
   className?: string;
   text?: string;
   fullScreen?: boolean;
   overlay?: boolean;
 }
 
-const LoadingSpinner = ({ 
-  size = 'md', 
-  color = 'blue',
-  className = '',
+const LoadingSpinner = ({
+  size = "md",
+  color = "blue",
+  className = "",
   text,
   fullScreen = false,
-  overlay = false
+  overlay = false,
 }: LoadingSpinnerProps) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -26,37 +26,39 @@ const LoadingSpinner = ({
   }, []);
 
   const sizes = {
-    xs: 'w-4 h-4',
-    sm: 'w-6 h-6',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16'
+    xs: "w-4 h-4",
+    sm: "w-6 h-6",
+    md: "w-8 h-8",
+    lg: "w-12 h-12",
+    xl: "w-16 h-16",
   };
 
   const colors = {
-    blue: 'border-royal-blue-200 border-t-royal-blue-600',
-    white: 'border-white/20 border-t-white',
-    gray: 'border-gray-200 border-t-gray-600',
-    electric: 'border-electric-blue-200 border-t-electric-blue-600'
+    blue: "border-royal-blue-200 border-t-royal-blue-600",
+    white: "border-white/20 border-t-white",
+    gray: "border-gray-200 border-t-gray-600",
+    electric: "border-electric-blue-200 border-t-electric-blue-600",
   };
 
   const spinner = (
     <div className={`flex flex-col items-center justify-center ${className}`}>
-      <div 
+      <div
         className={`
           ${sizes[size]} 
           ${colors[color]}
           border-4 rounded-full animate-spin
           transition-all duration-300
-          ${isVisible ? 'opacity-100' : 'opacity-0'}
+          ${isVisible ? "opacity-100" : "opacity-0"}
         `}
       />
       {text && (
-        <p className={`mt-3 font-medium ${
-          color === 'white' ? 'text-white' : 'text-gray-600'
-        } transition-all duration-300 delay-150 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-        }`}>
+        <p
+          className={`mt-3 font-medium ${
+            color === "white" ? "text-white" : "text-gray-600"
+          } transition-all duration-300 delay-150 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+          }`}
+        >
           {text}
         </p>
       )}
@@ -83,24 +85,24 @@ const LoadingSpinner = ({
 };
 
 // Pulse loader variant
-export const PulseLoader = ({ 
-  size = 'md',
-  color = 'blue',
-  className = ''
-}: Pick<LoadingSpinnerProps, 'size' | 'color' | 'className'>) => {
+export const PulseLoader = ({
+  size = "md",
+  color = "blue",
+  className = "",
+}: Pick<LoadingSpinnerProps, "size" | "color" | "className">) => {
   const sizeClasses = {
-    xs: 'w-1 h-1',
-    sm: 'w-1.5 h-1.5',
-    md: 'w-2 h-2',
-    lg: 'w-3 h-3',
-    xl: 'w-4 h-4'
+    xs: "w-1 h-1",
+    sm: "w-1.5 h-1.5",
+    md: "w-2 h-2",
+    lg: "w-3 h-3",
+    xl: "w-4 h-4",
   };
 
   const colorClasses = {
-    blue: 'bg-royal-blue-600',
-    white: 'bg-white',
-    gray: 'bg-gray-600',
-    electric: 'bg-electric-blue-600'
+    blue: "bg-royal-blue-600",
+    white: "bg-white",
+    gray: "bg-gray-600",
+    electric: "bg-electric-blue-600",
   };
 
   return (
@@ -115,7 +117,7 @@ export const PulseLoader = ({
           `}
           style={{
             animationDelay: `${i * 0.15}s`,
-            animationDuration: '1s'
+            animationDuration: "1s",
           }}
         />
       ))}
@@ -124,10 +126,10 @@ export const PulseLoader = ({
 };
 
 // Skeleton loader
-export const SkeletonLoader = ({ 
-  className = '',
-  lines = 1 
-}: { 
+export const SkeletonLoader = ({
+  className = "",
+  lines = 1,
+}: {
   className?: string;
   lines?: number;
 }) => {
@@ -138,8 +140,8 @@ export const SkeletonLoader = ({
           key={i}
           className="loading-skeleton rounded-lg h-4 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"
           style={{
-            backgroundSize: '200% 100%',
-            animation: 'shimmer 1.5s infinite'
+            backgroundSize: "200% 100%",
+            animation: "shimmer 1.5s infinite",
           }}
         />
       ))}
