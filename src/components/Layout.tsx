@@ -1,9 +1,9 @@
-import React, { ReactNode, useEffect } from 'react';
-import Script from 'next/script';
-import Header from './Header';
-import Footer from './Footer';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import React, { ReactNode, useEffect } from "react";
+import Script from "next/script";
+import Header from "./Header";
+import Footer from "./Footer";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 interface LayoutProps {
   children: ReactNode;
