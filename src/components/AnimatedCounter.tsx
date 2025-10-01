@@ -1,6 +1,6 @@
 // src/components/AnimatedCounter.tsx
 import { useState, useEffect, useRef } from 'react';
-import useOnScreen from '@/hooks/useOnScreen'; // This path must be exactly as shown
+import useOnScreen from '@src/hooks/useOnScreen'; // This path must be exactly as shown
 
 interface AnimatedCounterProps {
   target: number;
