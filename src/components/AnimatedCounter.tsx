@@ -1,6 +1,6 @@
-// /components/AnimatedCounter.tsx
+// src/components/AnimatedCounter.tsx
 import { useState, useEffect, useRef } from 'react';
-import useOnScreen from '@/hooks/useOnScreen';
+import useOnScreen from '@/hooks/useOnScreen'; // This path must be exactly as shown
 
 interface AnimatedCounterProps {
   target: number;
@@ -12,9 +12,9 @@ interface AnimatedCounterProps {
   decimals?: number;
 }
 
-const AnimatedCounter = ({ 
-  target, 
-  duration = 2000, 
+const AnimatedCounter = ({
+  target,
+  duration = 2000,
   prefix = '',
   suffix = '',
   className = '',
@@ -29,21 +29,15 @@ const AnimatedCounter = ({
   useEffect(() => {
     if (isVisible && !hasAnimated) {
       setHasAnimated(true);
-      
       let start = 0;
       const end = target;
-      const increment = end / (duration / 16); // ~60fps
       const startTime = Date.now();
-
       const easeOutQuart = (t: number) => 1 - --t * t * t * t;
-
       const timer = setInterval(() => {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easedProgress = easeOutQuart(progress);
-        
         const currentValue = start + (end - start) * easedProgress;
-        
         if (progress >= 1) {
           setCount(end);
           clearInterval(timer);
@@ -51,31 +45,21 @@ const AnimatedCounter = ({
           setCount(decimals > 0 ? parseFloat(currentValue.toFixed(decimals)) : Math.ceil(currentValue));
         }
       }, 16);
-
       return () => clearInterval(timer);
     }
   }, [isVisible, target, duration, decimals, hasAnimated]);
 
   const formatNumber = (num: number) => {
-    if (decimals > 0) {
-      return num.toLocaleString('en-US', {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      });
-    }
-    return num.toLocaleString('en-US');
+    return num.toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals,
+    });
   };
 
   return (
     <div ref={ref} className={`inline-flex items-center ${className}`}>
       {prefix && <span className="mr-1">{prefix}</span>}
-      <span 
-        className="font-black bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 bg-clip-text text-transparent"
-        style={{ 
-          backgroundSize: '200% 200%',
-          animation: isVisible ? 'gradient 3s ease infinite' : 'none'
-        }}
-      >
+      <span>
         {formatNumber(count)}
       </span>
       {suffix && <span className="ml-1">{suffix}</span>}

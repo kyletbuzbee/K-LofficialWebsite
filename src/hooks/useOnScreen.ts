@@ -1,4 +1,4 @@
-// /hooks/useOnScreen.ts
+// src/hooks/useOnScreen.ts
 import { useState, useEffect, RefObject } from 'react';
 
 interface UseOnScreenOptions {
@@ -8,16 +8,16 @@ interface UseOnScreenOptions {
 }
 
 const useOnScreen = (
-  ref: RefObject<Element>, 
+  ref: RefObject<Element>,
   options: UseOnScreenOptions = {}
 ): boolean => {
   const [isIntersecting, setIntersecting] = useState(false);
   const [hasTriggered, setHasTriggered] = useState(false);
 
-  const { 
-    threshold = 0, 
-    rootMargin = '0px', 
-    triggerOnce = true 
+  const {
+    threshold = 0,
+    rootMargin = '0px',
+    triggerOnce = true
   } = options;
 
   useEffect(() => {
