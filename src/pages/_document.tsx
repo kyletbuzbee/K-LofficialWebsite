@@ -22,7 +22,7 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" />
 
         {/* Meta tags */}
-        <meta name="theme-color" content="#2563eb" />
+        <meta name="msapplication-TileColor" content="#2563eb" />
 
         {/* Add Google Analytics */}
         {process.env.NEXT_PUBLIC_GA_ID && (
@@ -45,11 +45,6 @@ export default function Document() {
             />
           </>
         )}
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
       </Head>
       <body>
         <Main />

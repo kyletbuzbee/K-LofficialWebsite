@@ -55,10 +55,21 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
       >
         {/* Animated Gradient Orbs */}
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-royal-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-float"></div>
-        <div
-          className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-electric-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-float"
-          style={{ animationDelay: "2s" }}
-        ></div>
+        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-electric-blue-500 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-float animation-delay-2000"></div>
+
+        {/* Additional floating elements */}
+        <div className="absolute top-1/6 right-1/6 w-48 h-48 bg-green-500 rounded-full mix-blend-soft-light filter blur-2xl opacity-20 animate-float animation-delay-4000"></div>
+        <div className="absolute bottom-1/6 left-1/6 w-32 h-32 bg-yellow-500 rounded-full mix-blend-soft-light filter blur-2xl opacity-25 animate-float animation-delay-1000"></div>
+
+        {/* Particle system */}
+        <div className="absolute inset-0">
+          {[...Array(15)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-white rounded-full animate-float opacity-40 particle-float"
+            ></div>
+          ))}
+        </div>
       </div>
 
       {/* Enhanced Modal Panel */}

@@ -2,47 +2,46 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
- 
-  // Image optimization
+
+  eslint: { ignoreDuringBuilds: false },
+
   images: {
-    domains: ["placehold.co"],
-    formats: ["image/avif", "image/webp"],
+    // Allow external images from placehold.co
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+        port: "",
+        pathname: "/**",
+      },
+    ],
+
+    // If you’re doing a static export (next export),
+    // disable built-in optimization so local images won’t throw null
+    unoptimized: process.env.NEXT_EXPORT === "true",
   },
 
-  // Compiler options
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",
   },
- 
-  // Environment variables
+
   env: {
     SITE_URL: process.env.SITE_URL || "https://www.klrecycling.com",
   },
 
-  // Headers for security
   async headers() {
     return [
       {
         source: "/(.*)",
         headers: [
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "origin-when-cross-origin",
-          },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "origin-when-cross-origin" },
         ],
       },
     ];
   },
- 
-  // Redirects for old URLs (if migrating from old site)
+
   async redirects() {
     return [
       {

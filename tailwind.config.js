@@ -1,9 +1,14 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx}",
     "./src/components/**/*.{js,ts,jsx,tsx}",
   ],
+  future: {
+    respectDefaultRingColor: true,
+  },
   theme: {
     extend: {
       colors: {
@@ -59,5 +64,22 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")]
+  plugins: [
+    require("@tailwindcss/typography"),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".text-shadow-heavy": {
+          textShadow:
+            "2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(0,0,0,0.5)",
+        },
+        ".text-shadow-medium": {
+          textShadow:
+            "1px 1px 3px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.3)",
+        },
+        ".text-shadow-light": {
+          textShadow: "1px 1px 2px rgba(0,0,0,0.8)",
+        },
+      });
+    }),
+  ],
 };

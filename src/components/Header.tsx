@@ -79,22 +79,33 @@ const Header = () => {
           : "bg-white/80 backdrop-blur-sm"
       }`}
     >
-      <div className="container mx-auto px-6">
+      {/* Animated background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-0 left-1/4 w-32 h-32 bg-royal-blue-500 rounded-full mix-blend-multiply filter blur-2xl animate-float"></div>
+        <div className="absolute top-0 right-1/4 w-24 h-24 bg-electric-blue-500 rounded-full mix-blend-multiply filter blur-2xl animate-float animation-delay-2000"></div>
+      </div>
+
+      <div className="container mx-auto px-6 relative">
         <div className="flex justify-between items-center py-4">
-          {/* Enhanced Logo */}
-          <Link href="/" className="flex items-center space-x-3 group">
+          {/* Enhanced Logo with Particle Effect */}
+          <Link href="/" className="flex items-center space-x-3 group relative">
             <div className="relative">
-              <div className="w-12 h-12 bg-gradient-to-br from-royal-blue-600 to-electric-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-royal-blue-600 to-electric-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg animate-glow">
                 <span className="text-white font-black text-lg">K&L</span>
               </div>
               <div className="absolute -inset-1 bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 rounded-xl blur opacity-30 group-hover:opacity-70 transition-opacity duration-300"></div>
+              {/* Particle effect */}
+              <div className="absolute -top-1 -right-1 w-3 h-3 bg-electric-blue-400 rounded-full animate-ping"></div>
             </div>
             <div className="flex flex-col">
-              <h1 className="text-xl font-black text-gray-900 leading-tight group-hover:text-royal-blue-700 transition-colors">
+              <h1 className="text-xl font-black text-gray-900 leading-tight group-hover:text-royal-blue-700 transition-colors gradient-text">
                 K&L Recycling
               </h1>
               <p className="text-xs text-gray-500 font-medium">Since 1956</p>
             </div>
+            {/* Floating particles */}
+            <div className="absolute -top-2 -right-2 w-2 h-2 bg-royal-blue-400 rounded-full animate-float opacity-60"></div>
+            <div className="absolute top-1 -left-1 w-1.5 h-1.5 bg-electric-blue-400 rounded-full animate-float animation-delay-2000 opacity-40"></div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -132,7 +143,7 @@ const Header = () => {
                   />
                 </svg>
               </button>
-              <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform-gpu translate-y-2 group-hover:translate-y-0">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 translate-y-2 group-hover:translate-y-0">
                 <div className="p-6">
                   <h3 className="font-black text-gray-900 text-lg mb-4 flex items-center">
                     <span className="w-2 h-2 bg-royal-blue-600 rounded-full mr-2"></span>
@@ -196,6 +207,28 @@ const Header = () => {
                 </div>
               </div>
             </div>
+
+            <Link
+              href="/locations"
+              className={`font-semibold transition-all duration-300 hover:text-royal-blue-700 py-2 border-b-2 ${
+                isActive("/locations")
+                  ? "text-royal-blue-700 border-royal-blue-700"
+                  : "text-gray-700 border-transparent hover:border-royal-blue-300"
+              }`}
+            >
+              Locations
+            </Link>
+
+            <Link
+              href="/resources"
+              className={`font-semibold transition-all duration-300 hover:text-royal-blue-700 py-2 border-b-2 ${
+                isActive("/resources")
+                  ? "text-royal-blue-700 border-royal-blue-700"
+                  : "text-gray-700 border-transparent hover:border-royal-blue-300"
+              }`}
+            >
+              Resources
+            </Link>
 
             <Link
               href="/about"
@@ -283,6 +316,30 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Services
+            </Link>
+
+            <Link
+              href="/locations"
+              className={`block font-semibold py-3 px-4 rounded-xl transition-all duration-300 ${
+                isActive("/locations")
+                  ? "bg-royal-blue-50 text-royal-blue-700 border-l-4 border-royal-blue-700"
+                  : "text-gray-700 hover:bg-gray-50 hover:text-royal-blue-700"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Locations
+            </Link>
+
+            <Link
+              href="/resources"
+              className={`block font-semibold py-3 px-4 rounded-xl transition-all duration-300 ${
+                isActive("/resources")
+                  ? "bg-royal-blue-50 text-royal-blue-700 border-l-4 border-royal-blue-700"
+                  : "text-gray-700 hover:bg-gray-50 hover:text-royal-blue-700"
+              }`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Resources
             </Link>
 
             <Link
