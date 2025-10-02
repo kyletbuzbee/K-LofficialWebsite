@@ -409,8 +409,8 @@ const Map: FC<{
   if (!isLoaded)
     return (
       <div
+        className="map-loading flex items-center justify-center bg-gray-200"
         style={mapContainerStyle}
-        className="flex items-center justify-center bg-gray-200"
       >
         <p>Loading Map...</p>
       </div>

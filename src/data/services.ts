@@ -6,7 +6,7 @@ export const SERVICES_DATA: { [key: string]: Service } = {
     title: "Industrial Scrap Management",
     description:
       "We partner with manufacturing facilities to transform scrap metal waste streams into significant revenue.",
-    image: "/images/Contruction.jpg",
+    image: "/images/Construction.jpg",
     details: [
       "Customized collection schedules tailored to your production cycles.",
       "A wide array of on-site containers including roll-offs, gondolas, and totes.",

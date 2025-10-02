@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link"; // Keep this import
+import Link from "next/link";
+import Image from "next/image";
 import React, { type FC, type ReactNode } from "react";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
@@ -31,8 +32,39 @@ const itemVariants = {
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-primary">
-      <HeroBackground />
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image with Ken Burns effect */}
+      <div className="absolute inset-0 z-0">
+        <motion.div
+          initial={{ scale: 1.2 }}
+          animate={{
+            scale: [1.2, 1.3],
+            transition: {
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "linear"
+            }
+          }}
+          className="relative w-full h-full"
+        >
+          <Image
+            src="/images/hero_background.jpg"
+            alt="Metal Recycling Facility"
+            fill
+            priority
+            quality={100}
+            className="object-cover"
+          />
+        </motion.div>
+        
+        {/* Overlay gradient for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50"></div>
+        
+        {/* Subtle texture overlay */}
+        <div className="absolute inset-0 bg-pattern opacity-[0.03]"></div>
+      </div>
+
       <div className="container mx-auto px-6 relative z-20 text-center">
         <motion.div
           className="max-w-6xl mx-auto"
@@ -86,14 +118,14 @@ const Hero = () => {
 
 // Abstracted button styles using class-variance-authority for type-safe variants
 const buttonVariants = cva(
-  "text-lg px-10 py-5 group relative overflow-hidden transition-all duration-300 ease-in-out transform focus:outline-none focus:ring-4",
+  "relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 overflow-hidden group transform hover:-translate-y-1",
   {
     variants: {
       variant: {
         primary:
-          "bg-electric-blue-500 text-white hover:bg-electric-blue-600 focus:ring-electric-blue-300",
+          "bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 text-white hover:from-royal-blue-700 hover:to-electric-blue-700 shadow-lg hover:shadow-2xl hover:scale-105",
         secondary:
-          "bg-white/10 text-white border border-white/30 hover:bg-white/20 focus:ring-white/30",
+          "bg-white/10 text-white border-2 border-white/20 backdrop-blur-sm hover:bg-white/20 shadow-lg hover:shadow-2xl hover:scale-105",
       },
     },
     defaultVariants: {
@@ -123,39 +155,68 @@ const Button: FC<ButtonProps> = ({ href, variant, children }) => (
 
 const HeroBackground: FC = () => (
   <div className="absolute inset-0 z-0" aria-hidden="true">
-    {/* Animated Gradient Background */}
-    <div className="absolute inset-0 animate-gradient"></div>
+    {/* Main Background Image with Ken Burns effect */}
+    <div className="absolute inset-0 z-2 overflow-hidden">
+      <motion.div
+        initial={{ scale: 1.1 }}
+        animate={{ 
+          scale: 1.2,
+          transition: {
+            duration: 20,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "linear"
+          }
+        }}
+        className="absolute inset-0"
+      >
+        <Image
+          src="/images/hero_background.jpg"
+          alt="Metal Recycling Facility"
+          fill
+          quality={100}
+          priority
+          className="object-cover object-center"
+        />
+      </motion.div>
+    </div>
 
-    {/* Grid Pattern Overlay */}
-    <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px]"></div>
+    {/* Subtle Overlay Pattern */}
+    <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px] z-3"></div>
 
-    {/* Animated Orbs with Subtle Pulse */}
-    <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-royal-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float z-1"></div>
-    <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-electric-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float animation-delay-2000"></div>
-    <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-royal-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float animation-delay-4000"></div>
+    {/* Gradient Overlay for Text Readability */}
+    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/40 z-4"></div>
 
-    {/* Additional floating elements for depth */}
-    <div className="absolute top-1/6 right-1/6 w-64 h-64 bg-green-500 rounded-full mix-blend-multiply filter blur-2xl opacity-10 animate-float animation-delay-2000"></div>
-    <div className="absolute bottom-1/6 left-1/6 w-48 h-48 bg-yellow-500 rounded-full mix-blend-multiply filter blur-2xl opacity-15 animate-float animation-delay-4000"></div>
+    {/* Vignette Effect */}
+    <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/30 z-5"></div>
 
-    {/* Particle system */}
-    <div className="absolute inset-0">
-      {[...Array(20)].map((_, i) => (
-        <div
+    {/* Animated Particles for Depth */}
+    <motion.div 
+      className="absolute inset-0 z-6"
+      initial="hidden"
+      animate="visible"
+    >
+      {[...Array(15)].map((_, i) => (
+        <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-white rounded-full animate-float opacity-30 particle-float"
-        ></div>
+          className="absolute w-1 h-1 bg-white rounded-full"
+          initial={{ 
+            x: Math.random() * 100 + "%",
+            y: Math.random() * 100 + "%",
+            opacity: 0 
+          }}
+          animate={{
+            y: [null, "-100%"],
+            opacity: [0, 0.3, 0],
+            transition: {
+              duration: 2 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2
+            }
+          }}
+        />
       ))}
-    </div>
-
-    {/* Dynamic Scrap Yard Background Image */}
-    <div className="absolute inset-0 z-2">
-      <div className="absolute inset-0 bg-cover bg-center animate-zoom-in hero-background"></div>
-      {/* Enhanced overlay for better text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80 z-3"></div>
-      {/* Additional text shadow overlay */}
-      <div className="absolute inset-0 bg-black/20"></div>
-    </div>
+    </motion.div>
 
     {/* Shimmer effect overlay */}
     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer z-20"></div>
@@ -163,7 +224,7 @@ const HeroBackground: FC = () => (
 );
 
 const statsData = [
-  { value: "68+", label: "Years Experience", icon: "♻️" },
+  { value: "68+", label: "Years Experience", icon: "🏆" },
   { value: "10,000+", label: "Tons Annual", icon: "♻️" },
   { value: "500+", label: "Active Partners", icon: "♻️" },
 ];

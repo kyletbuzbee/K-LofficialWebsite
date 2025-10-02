@@ -3,9 +3,115 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout from "../components/Layout";
 import MultiStepForm from "@/components/MultiStepForm";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  InfoWindow,
+} from "@react-google-maps/api";
+
+const locations = [
+  {
+    id: "kl-tyler",
+    name: "K&L Recycling",
+    address: "4134 Chandler Highway, Tyler, TX 75702",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Industrial Pickup"],
+    coordinates: { lat: 32.3879, lng: -95.3344 },
+    isMain: true,
+  },
+  {
+    id: "houston-county",
+    name: "Houston County Scrap",
+    address: "403 South 2nd Street, Crockett, TX 75835",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Roll-off Containers"],
+    coordinates: { lat: 31.3143, lng: -95.4572 },
+    isMain: false,
+  },
+  {
+    id: "mineola",
+    name: "Mineola Iron & Metal",
+    address: "2590 Highway 80 West, Mineola, TX 75773",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Industrial Pickup"],
+    coordinates: { lat: 32.6515, lng: -95.5233 },
+    isMain: false,
+  },
+  {
+    id: "anderson-county",
+    name: "Anderson County Scrap",
+    address: "4340 State Highway 19, Palestine, TX 75801",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Demolition Services"],
+    coordinates: { lat: 31.8118, lng: -95.6483 },
+    isMain: false,
+  },
+  {
+    id: "nacogdoches",
+    name: "Nacogdoches Recycling Center",
+    address: "2508 Woden Road, Nacogdoches, TX 75961",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Roll-off Containers"],
+    coordinates: { lat: 31.5718, lng: -94.6293 },
+    isMain: false,
+  },
+  {
+    id: "premier",
+    name: "Premier Recyclers",
+    address: "1953 Highway 190 West, Jasper, TX 75951",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Car Crushing"],
+    coordinates: { lat: 30.9185, lng: -94.0252 },
+    isMain: false,
+  },
+  {
+    id: "jacksonville",
+    name: "Jacksonville Iron & Metal",
+    address: "599 CR 1520, Jacksonville, TX 75766",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Industrial Pickup"],
+    coordinates: { lat: 31.9963, lng: -95.2533 },
+    isMain: false,
+  },
+  {
+    id: "acme",
+    name: "Acme Scrap",
+    address: "700 Frey Street, Great Bend, KS 67530",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Car Crushing"],
+    coordinates: { lat: 38.3606, lng: -98.7745 },
+    isMain: false,
+  },
+  {
+    id: "madfos",
+    name: "Madfos Metals",
+    address: "10757 Highway 271, Tyler, TX 75708",
+    phone: "(800) 533-8081",
+    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
+    services: ["Public Drop-off", "Industrial Pickup"],
+    coordinates: { lat: 32.4639, lng: -95.2119 },
+    isMain: false,
+  },
+];
+
+type Location = (typeof locations)[0];
 
 const ContactPage: FC = () => {
   const [activeTab, setActiveTab] = useState("quote");
+  const [activeMarker, setActiveMarker] = useState<Location | null>(null);
+
+  const handleMarkerClick = (marker: Location) => {
+    setActiveMarker(marker);
+  };
 
   const contactMethods = [
     {
@@ -35,49 +141,6 @@ const ContactPage: FC = () => {
       description: "Send us your questions and requirements",
       icon: "✉️",
       color: "from-orange-500 to-red-600",
-    },
-  ];
-
-  const locations = [
-    {
-      name: "Houston Main Facility",
-      address: "1234 Industrial Blvd, Houston, TX 77001",
-      phone: "(713) 555-0123",
-      hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-      services: ["Public Drop-off", "Industrial Pickup", "Roll-off Containers"],
-      isMain: true,
-      coordinates: { lat: 29.7604, lng: -95.3698 },
-    },
-    {
-      name: "Dallas Facility",
-      address: "5678 Metal Way, Dallas, TX 75201",
-      phone: "(214) 555-0456",
-      hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-      services: ["Public Drop-off", "Industrial Pickup", "Car Crushing"],
-      isMain: false,
-      coordinates: { lat: 32.7767, lng: -96.797 },
-    },
-    {
-      name: "Austin Facility",
-      address: "9012 Recycling Rd, Austin, TX 78701",
-      phone: "(512) 555-0789",
-      hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-      services: [
-        "Public Drop-off",
-        "Demolition Services",
-        "Roll-off Containers",
-      ],
-      isMain: false,
-      coordinates: { lat: 30.2672, lng: -97.7431 },
-    },
-    {
-      name: "Wichita Facility",
-      address: "3456 Scrap Metal Ave, Wichita, KS 67201",
-      phone: "(316) 555-0321",
-      hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-      services: ["Public Drop-off", "Industrial Pickup", "Car Crushing"],
-      isMain: false,
-      coordinates: { lat: 37.6872, lng: -97.3301 },
     },
   ];
 
@@ -519,40 +582,12 @@ const ContactPage: FC = () => {
           </div>
 
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
-            <div className="h-96 bg-gradient-to-br from-royal-blue-100 to-electric-blue-100 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-royal-blue-600 to-electric-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <svg
-                    className="w-8 h-8 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Interactive Map
-                </h3>
-                <p className="text-gray-600">
-                  Interactive map showing all K&L Recycling locations
-                </p>
-                <p className="text-sm text-gray-500 mt-2">
-                  Map integration coming soon
-                </p>
-              </div>
-            </div>
+            <Map
+              locations={locations}
+              activeMarker={activeMarker}
+              onMarkerClick={handleMarkerClick}
+              onCloseClick={() => setActiveMarker(null)}
+            />
           </div>
         </div>
       </section>
@@ -584,6 +619,88 @@ const ContactPage: FC = () => {
         </div>
       </section>
     </Layout>
+  );
+};
+
+const Map: FC<{
+  locations: Location[];
+  activeMarker: Location | null;
+  onMarkerClick: (marker: Location) => void;
+  onCloseClick: () => void;
+}> = ({ locations, activeMarker, onMarkerClick, onCloseClick }) => {
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  });
+
+  const mapContainerStyle = {
+    width: "100%",
+    height: "400px",
+  };
+
+  const center = {
+    lat: 33.5,
+    lng: -96.0,
+  };
+
+  if (!isLoaded)
+    return (
+      <div
+        style={mapContainerStyle}
+        className="flex items-center justify-center bg-gray-200"
+      >
+        <p>Loading Map...</p>
+      </div>
+    );
+
+  return (
+    <GoogleMap
+      mapContainerStyle={mapContainerStyle}
+      center={center}
+      zoom={6}
+      options={{
+        streetViewControl: false,
+        mapTypeControl: false,
+        fullscreenControl: false,
+      }}
+    >
+      {locations.map((loc) => (
+        <Marker
+          key={loc.id}
+          position={loc.coordinates}
+          onClick={() => onMarkerClick(loc)}
+          icon={{
+            path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
+            fillColor: loc.isMain ? "#1d4ed8" : "#0ea5e9",
+            fillOpacity: 1,
+            strokeWeight: 0,
+            rotation: 0,
+            scale: 1.5,
+            anchor: new google.maps.Point(12, 24),
+          }}
+        />
+      ))}
+
+      {activeMarker && (
+        <InfoWindow
+          position={activeMarker.coordinates}
+          onCloseClick={onCloseClick}
+        >
+          <div className="p-2 max-w-xs">
+            <h4 className="font-bold text-md mb-1">{activeMarker.name}</h4>
+            <p className="text-sm text-gray-600">{activeMarker.address}</p>
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=${activeMarker.coordinates.lat},${activeMarker.coordinates.lng}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-semibold text-royal-blue-600 hover:underline mt-2 inline-block"
+            >
+              Get Directions
+            </a>
+          </div>
+        </InfoWindow>
+      )}
+    </GoogleMap>
   );
 };
 

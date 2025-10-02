@@ -2,11 +2,15 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
+import Image from "next/image";
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   useEffect(() => {
     setIsMounted(true);
@@ -89,13 +93,16 @@ const Header = () => {
         <div className="flex justify-between items-center py-4">
           {/* Enhanced Logo with Particle Effect */}
           <Link href="/" className="flex items-center space-x-3 group relative">
-            <div className="relative">
-              <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg animate-glow">
-                <span className="text-white font-black text-lg">K&L</span>
-              </div>
-              <div className="absolute -inset-1 bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 rounded-xl blur opacity-30 group-hover:opacity-70 transition-opacity duration-300"></div>
-              {/* Particle effect */}
-              <div className="absolute -top-1 -right-1 w-3 h-3 bg-electric-blue-400 rounded-full animate-ping"></div>
+            <div className="relative w-16 h-16">
+              <Image
+                src="/images/logo.png"
+                alt="K&L Recycling Logo"
+                layout="fill"
+                objectFit="contain"
+                className="group-hover:scale-105 transition-transform duration-300"
+                priority
+              />
+            </div>
             </div>
             <div className="flex flex-col">
               <h1 className="text-xl font-black text-gray-900 leading-tight group-hover:text-royal-blue-700 transition-colors gradient-text">

@@ -44,7 +44,7 @@ const ResourcesPage: FC = () => {
       title: "Metal Identification Guide",
       description:
         "Learn how to identify different types of metals and maximize your recycling value",
-      image: "/images/copper.jpg",
+      image: "/images/copper.png",
       category: "Guide",
       readTime: "5 min read",
     },

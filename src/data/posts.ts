@@ -31,7 +31,7 @@ export const allPosts: BlogPost[] = [
     category: "Sustainability",
     excerpt:
       "Understanding how recycling scrap metal contributes to environmental conservation and reduces carbon emissions.",
-    image: "/images/Contruction.jpg",
+    image: "/images/Construction.jpg",
     content: "Full blog post content goes here...",
   },
 ];
