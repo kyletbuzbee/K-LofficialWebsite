@@ -305,13 +305,6 @@ const ServicesPage: FC = () => {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 text-white">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-black mb-6">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
-            Contact us today to discuss your recycling needs and get a
-            customized quote for your specific requirements.
-          </p>
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <Link
               href="/contact#quote-tool"
@@ -321,7 +314,7 @@ const ServicesPage: FC = () => {
             </Link>
             <Link
               href="/locations"
-              className="border-2 border-white text-white font-bold py-4 px-8 rounded-xl hover:bg-white hover:text-royal-blue-600 transition-colors text-lg"
+              className="border-2 border-blue-500 text-blue-500 font-bold py-4 px-8 rounded-xl hover:bg-blue-500 hover:text-white transition-colors text-lg"
             >
               Find Location
             </Link>

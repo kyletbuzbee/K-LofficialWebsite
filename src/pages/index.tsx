@@ -38,24 +38,9 @@ const HomePage: FC = () => {
               className="group bg-gradient-to-br from-royal-blue-50 to-electric-blue-50 rounded-2xl p-8 text-center hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="w-16 h-16 bg-gradient-to-br from-royal-blue-600 to-electric-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                <svg
-                  className="w-8 h-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">
@@ -155,7 +140,7 @@ const HomePage: FC = () => {
               >
                 <div className="relative h-48 overflow-hidden">
                   <Image
-                    src={service.image}
+                    src={service.id === 'roll-off' ? '/images/demolition-safety.png' : service.image}
                     alt={service.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -353,15 +338,17 @@ const HomePage: FC = () => {
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
             <Link
               href="/contact#quote-tool"
-              className="bg-white text-royal-blue-600 font-bold py-4 px-8 rounded-xl hover:bg-gray-100 transition-colors text-lg"
+              className="group relative inline-block px-8 py-4 font-bold text-white bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300"
             >
-              Get Free Quote
+              <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-electric-blue-600 to-royal-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+              <span className="relative">Get Free Quote</span>
             </Link>
             <Link
               href="/locations"
-              className="border-2 border-white text-white font-bold py-4 px-8 rounded-xl hover:bg-white hover:text-royal-blue-600 transition-colors text-lg"
+              className="group relative inline-block px-8 py-4 font-bold text-white border-2 border-white rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-all duration-300"
             >
-              Find Location
+              <span className="absolute top-0 left-0 w-full h-full bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+              <span className="relative">Find Location</span>
             </Link>
           </div>
         </div>

@@ -352,7 +352,7 @@ const ResourcesPage: FC = () => {
           <h2 className="text-4xl md:text-5xl font-black mb-6">
             Still Have Questions?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl text-white mb-8 max-w-3xl mx-auto">
             Our recycling experts are here to help. Contact us for personalized
             advice and answers to your specific questions.
           </p>
