@@ -10,7 +10,7 @@ const Header = () => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
 
   useEffect(() => {
     setIsMounted(true);
@@ -102,7 +102,6 @@ const Header = () => {
                 className="group-hover:scale-105 transition-transform duration-300"
                 priority
               />
-            </div>
             </div>
             <div className="flex flex-col">
               <h1 className="text-xl font-black text-gray-900 leading-tight group-hover:text-royal-blue-700 transition-colors gradient-text">

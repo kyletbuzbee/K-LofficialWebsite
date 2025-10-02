@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "../components/Layout";
-import MultiStepForm from "@/components/MultiStepForm";
+import { ContactForm } from "@/components/ContactForm/ContactForm";
 import {
   GoogleMap,
   useJsApiLoader,
@@ -359,7 +359,7 @@ const ContactPage: FC = () => {
                     within 24 hours
                   </p>
                 </div>
-                <MultiStepForm />
+                <ContactForm />
               </div>
             )}
 

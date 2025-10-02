@@ -43,8 +43,8 @@ const Hero = () => {
               duration: 20,
               repeat: Infinity,
               repeatType: "reverse",
-              ease: "linear"
-            }
+              ease: "linear",
+            },
           }}
           className="relative w-full h-full"
         >
@@ -57,10 +57,10 @@ const Hero = () => {
             className="object-cover"
           />
         </motion.div>
-        
+
         {/* Overlay gradient for better text visibility */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50"></div>
-        
+
         {/* Subtle texture overlay */}
         <div className="absolute inset-0 bg-pattern opacity-[0.03]"></div>
       </div>
@@ -153,75 +153,7 @@ const Button: FC<ButtonProps> = ({ href, variant, children }) => (
   </Link>
 );
 
-const HeroBackground: FC = () => (
-  <div className="absolute inset-0 z-0" aria-hidden="true">
-    {/* Main Background Image with Ken Burns effect */}
-    <div className="absolute inset-0 z-2 overflow-hidden">
-      <motion.div
-        initial={{ scale: 1.1 }}
-        animate={{ 
-          scale: 1.2,
-          transition: {
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear"
-          }
-        }}
-        className="absolute inset-0"
-      >
-        <Image
-          src="/images/hero_background.jpg"
-          alt="Metal Recycling Facility"
-          fill
-          quality={100}
-          priority
-          className="object-cover object-center"
-        />
-      </motion.div>
-    </div>
 
-    {/* Subtle Overlay Pattern */}
-    <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px] z-3"></div>
-
-    {/* Gradient Overlay for Text Readability */}
-    <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/30 to-black/40 z-4"></div>
-
-    {/* Vignette Effect */}
-    <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/30 z-5"></div>
-
-    {/* Animated Particles for Depth */}
-    <motion.div 
-      className="absolute inset-0 z-6"
-      initial="hidden"
-      animate="visible"
-    >
-      {[...Array(15)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-white rounded-full"
-          initial={{ 
-            x: Math.random() * 100 + "%",
-            y: Math.random() * 100 + "%",
-            opacity: 0 
-          }}
-          animate={{
-            y: [null, "-100%"],
-            opacity: [0, 0.3, 0],
-            transition: {
-              duration: 2 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2
-            }
-          }}
-        />
-      ))}
-    </motion.div>
-
-    {/* Shimmer effect overlay */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer z-20"></div>
-  </div>
-);
 
 const statsData = [
   { value: "68+", label: "Years Experience", icon: "🏆" },
