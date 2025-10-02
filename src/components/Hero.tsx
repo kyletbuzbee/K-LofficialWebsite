@@ -150,9 +150,7 @@ const HeroBackground: FC = () => (
 
     {/* Dynamic Scrap Yard Background Image */}
     <div className="absolute inset-0 z-2">
-      <div
-        className="absolute inset-0 bg-cover bg-center animate-zoom-in hero-background"
-      ></div>
+      <div className="absolute inset-0 bg-cover bg-center animate-zoom-in hero-background"></div>
       {/* Enhanced overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/80 z-3"></div>
       {/* Additional text shadow overlay */}

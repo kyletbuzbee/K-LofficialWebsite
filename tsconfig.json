@@ -20,11 +20,17 @@
       "@/styles/*": ["src/styles/*"],
       "@/pages/*": ["src/pages/*"],
       "@/hooks/*": ["src/hooks/*"],
-      "@/data/*": ["src/data/*"],   
+      "@/data/*": ["src/data/*"],
       "@/types": ["src/types"],
       "@/types/*": ["src/types/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/types/global.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/types/global.d.ts",
+    "*.js"
+  ],
   "exclude": ["node_modules"]
 }
