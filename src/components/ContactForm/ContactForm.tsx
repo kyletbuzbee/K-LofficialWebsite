@@ -13,12 +13,11 @@ const INITIAL_DATA = {
 
 export function ContactForm() {
   const [data, setData] = useState(INITIAL_DATA);
-  const { steps, currentStepIndex, step, back, next } =
-    useMultiStepForm([
-      <Step1 key="step1" {...data} updateFields={updateFields} />,
-      <Step2 key="step2" {...data} updateFields={updateFields} />,
-      <Step3 key="step3" />,
-    ]);
+  const { steps, currentStepIndex, step, back, next } = useMultiStepForm([
+    <Step1 key="step1" {...data} updateFields={updateFields} />,
+    <Step2 key="step2" {...data} updateFields={updateFields} />,
+    <Step3 key="step3" />,
+  ]);
 
   function updateFields(fields: Partial<typeof INITIAL_DATA>) {
     setData((prev) => {

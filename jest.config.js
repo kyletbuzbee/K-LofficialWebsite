@@ -1,21 +1,27 @@
-module.exports = {
-  roots: ['<rootDir>/src'],
-  testMatch: [
-    '**/__tests__/**/*.+(ts|tsx|js)',
-    '**/?(*.)+(spec|test).+(ts|tsx|js)',
+const nextJest = require("next/jest");
+
+const createJestConfig = nextJest({
+  dir: "./"
+});
+
+module.exports = createJestConfig({
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  testEnvironment: "jsdom",
+  moduleDirectories: ["node_modules", "<rootDir>/"],
+  testPathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/.next/",
+    "<rootDir>/src/pages/"
   ],
-  transform: {
-    '^.+\.(ts|tsx)$': 'ts-jest',
-  },
-  testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['@testing-library/jest-dom'],
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.jest.json',
-    },
-  },
-  moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '\.css$': '<rootDir>/src/__mocks__/styleMock.js',
-  },
-};
+  testMatch: ["<rootDir>/src/**/*.test.(ts|tsx)"],
+  collectCoverage: true,
+  coverageDirectory: "coverage",
+  coverageReporters: ["text", "lcov"],
+  collectCoverageFrom: [
+    "src/components/**/*.{ts,tsx}",
+    "src/pages/**/*.{ts,tsx}",
+    "!src/pages/_*.{ts,tsx}",
+    "!**/node_modules/**",
+    "!**/*.d.ts"
+  ]
+});

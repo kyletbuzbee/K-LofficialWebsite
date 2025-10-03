@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react";
-import { useMultiStepForm } from "./useMultiStepForm";
+import { useMultiStepForm } from "../hooks/useMultiStepForm";
 import React from "react";
 
 const Step1 = () => <div>Step 1</div>;
@@ -9,7 +9,11 @@ const Step3 = () => <div>Step 3</div>;
 describe("useMultiStepForm", () => {
   it("should return the first step initially", () => {
     const { result } = renderHook(() =>
-      useMultiStepForm([<Step1 key={1} />, <Step2 key={2} />, <Step3 key={3} />])
+      useMultiStepForm([
+        <Step1 key="1" />,
+        <Step2 key="2" />,
+        <Step3 key="3" />,
+      ]),
     );
     expect(result.current.currentStepIndex).toBe(0);
     expect(result.current.isFirstStep).toBe(true);
@@ -17,7 +21,11 @@ describe("useMultiStepForm", () => {
 
   it("should go to the next step", () => {
     const { result } = renderHook(() =>
-      useMultiStepForm([<Step1 key={1} />, <Step2 key={2} />, <Step3 key={3} />])
+      useMultiStepForm([
+        <Step1 key="1" />,
+        <Step2 key="2" />,
+        <Step3 key="3" />,
+      ]),
     );
     act(() => {
       result.current.next();
@@ -27,7 +35,11 @@ describe("useMultiStepForm", () => {
 
   it("should go to the previous step", () => {
     const { result } = renderHook(() =>
-      useMultiStepForm([<Step1 key={1} />, <Step2 key={2} />, <Step3 key={3} />])
+      useMultiStepForm([
+        <Step1 key="1" />,
+        <Step2 key="2" />,
+        <Step3 key="3" />,
+      ]),
     );
     act(() => {
       result.current.next();
@@ -40,7 +52,7 @@ describe("useMultiStepForm", () => {
 
   it("should not go past the last step", () => {
     const { result } = renderHook(() =>
-      useMultiStepForm([<Step1 key={1} />, <Step2 key={2} />])
+      useMultiStepForm([<Step1 key="1" />, <Step2 key="2" />]),
     );
     act(() => {
       result.current.next();
@@ -54,7 +66,7 @@ describe("useMultiStepForm", () => {
 
   it("should not go before the first step", () => {
     const { result } = renderHook(() =>
-      useMultiStepForm([<Step1 key={1} />, <Step2 key={2} />])
+      useMultiStepForm([<Step1 key="1" />, <Step2 key="2" />]),
     );
     act(() => {
       result.current.back();
@@ -65,7 +77,11 @@ describe("useMultiStepForm", () => {
 
   it("should go to a specific step", () => {
     const { result } = renderHook(() =>
-      useMultiStepForm([<Step1 key={1} />, <Step2 key={2} />, <Step3 key={3} />])
+      useMultiStepForm([
+        <Step1 key="1" />,
+        <Step2 key="2" />,
+        <Step3 key="3" />,
+      ]),
     );
     act(() => {
       result.current.goTo(2);

@@ -2,6 +2,12 @@
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Exclude test files from being treated as pages during production builds.
+  pageExtensions: ["ts", "tsx", "js", "jsx"].flatMap((ext) =>
+    process.env.NODE_ENV === "development"
+      ? [`test.${ext}`, `spec.${ext}`, ext]
+      : [ext],
+  ),
   reactStrictMode: true,
   swcMinify: true,
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { ContactForm } from "./ContactForm";
+import { ContactForm } from "../components/ContactForm/ContactForm";
 
 global.fetch = jest.fn(() =>
   Promise.resolve({

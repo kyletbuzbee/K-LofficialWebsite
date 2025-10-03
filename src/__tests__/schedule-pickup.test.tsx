@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import SchedulePickupPage from "./schedule-pickup";
+import SchedulePickupPage from "../pages/schedule-pickup";
 
 jest.mock("next/router");
 

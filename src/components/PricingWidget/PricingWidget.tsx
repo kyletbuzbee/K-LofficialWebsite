@@ -1,31 +1,37 @@
 import React, { useState, useEffect } from "react";
-
-interface PricingItem {
-  name: string;
-  price: number;
-  unit: string;
-}
-
-interface PricingData {
-  [key: string]: PricingItem;
-}
+import type { PricingData, PricingItem } from "@/types";
 
 export function PricingWidget() {
   const [pricing, setPricing] = useState<PricingData | null>(null);
   const [material, setMaterial] = useState("copper");
   const [loading, setLoading] = useState(true);
+  const [selectedPrice, setSelectedPrice] = useState<PricingItem | null>(null);
 
   useEffect(() => {
     fetch("/api/pricing")
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: PricingData) => {
         setPricing(data);
+      })
+      .catch(console.error) // It's good practice to handle potential fetch errors
+      .finally(() => {
         setLoading(false);
       });
   }, []);
 
+  useEffect(() => {
+    if (pricing) {
+      setSelectedPrice(pricing[material]);
+    }
+  }, [pricing, material]);
+
   const handleMaterialChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMaterial(e.target.value);
+    const newMaterial = e.target.value;
+    setMaterial(newMaterial);
+    // Update the selected price when the material changes
+    if (pricing && pricing[newMaterial]) {
+      setSelectedPrice(pricing[newMaterial]);
+    }
   };
 
   return (
@@ -41,39 +47,47 @@ export function PricingWidget() {
         </div>
 
         <div className="max-w-2xl mx-auto bg-gray-50 p-8 rounded-lg shadow-lg">
-          {loading || !pricing ? (
-            <p>Loading prices...</p>
+          {loading ? (
+            <p className="text-center">Loading prices...</p>
           ) : (
             <div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                {Object.values(pricing).map((item) => (
-                  <div key={item.name} className="text-center">
-                    <h3 className="text-lg font-bold text-gray-900">
-                      {item.name}
-                    </h3>
-                    <p className="text-2xl font-bold text-green-600">
-                      ${item.price.toFixed(2)}
-                    </p>
-                    <p className="text-sm text-gray-600">{item.unit}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center">
-                <select
-                  value={material}
-                  onChange={handleMaterialChange}
-                  className="w-full p-4 border border-gray-300 rounded-l-lg"
-                >
-                  {Object.keys(pricing).map((key) => (
-                    <option key={key} value={key}>
-                      {pricing[key].name}
-                    </option>
+              {pricing && (
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                  {Object.values(pricing).map((item) => (
+                    <div key={item.name} className="text-center">
+                      <h3 className="text-lg font-bold text-gray-900">
+                        {item.name}
+                      </h3>
+                      <p className="text-2xl font-bold text-green-600">
+                        ${item.price.toFixed(2)}
+                      </p>
+                      <p className="text-sm text-gray-600">{item.unit}</p>
+                    </div>
                   ))}
-                </select>
-                <button className="bg-green-600 text-white p-4 rounded-r-lg font-bold">
-                  Get Price
-                </button>
-              </div>
+                </div>
+              )}
+              {pricing && selectedPrice && (
+                <div className="flex items-center">
+                  <select
+                    aria-label="Select material type"
+                    value={material}
+                    onChange={handleMaterialChange}
+                    className="w-full p-4 border border-gray-300 rounded-l-lg"
+                  >
+                    {Object.keys(pricing).map((key) => (
+                      <option key={key} value={key}>
+                        {pricing[key].name}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    className="bg-green-600 text-white p-4 rounded-r-lg font-bold w-48 text-center"
+                  >
+                    ${selectedPrice.price.toFixed(2)} / {selectedPrice.unit}
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </div>

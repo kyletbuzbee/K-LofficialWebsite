@@ -153,8 +153,6 @@ const Button: FC<ButtonProps> = ({ href, variant, children }) => (
   </Link>
 );
 
-
-
 const statsData = [
   { value: "68+", label: "Years Experience", icon: "🏆" },
   { value: "10,000+", label: "Tons Annual", icon: "♻️" },

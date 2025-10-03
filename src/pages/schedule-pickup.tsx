@@ -15,13 +15,13 @@ const INITIAL_DATA = {
   honeypot: "",
 };
 
-type FormData = typeof INITIAL_DATA;
+type UserData = typeof INITIAL_DATA;
 
-type StepProps = {
-  updateFields: (fields: Partial<FormData>) => void;
+type StepProps = UserData & {
+  updateFields: (fields: Partial<UserData>) => void;
 };
 
-function Step1({ name, email, phone, updateFields }: Pick<FormData, "name" | "email" | "phone"> & StepProps) {
+function Step1({ name, email, phone, updateFields }: StepProps) {
   return (
     <div>
       <h2>Contact Information</h2>
@@ -54,10 +54,11 @@ function Step1({ name, email, phone, updateFields }: Pick<FormData, "name" | "em
   );
 }
 
-function Step2({ address, city, state, zip, updateFields }: Pick<FormData, "address" | "city" | "state" | "zip"> & StepProps) {
+function Step2({ address, city, state, zip, updateFields }: StepProps) {
   return (
     <div>
       <h2>Pickup Address</h2>
+
       <label>
         Address
         <input
@@ -94,7 +95,7 @@ function Step2({ address, city, state, zip, updateFields }: Pick<FormData, "addr
   );
 }
 
-function Step3({ pickupDate, materials, honeypot, updateFields }: Pick<FormData, "pickupDate" | "materials" | "honeypot"> & StepProps) {
+function Step3({ pickupDate, materials, honeypot, updateFields }: StepProps) {
   return (
     <div>
       <h2>Pickup Details</h2>
@@ -134,15 +135,14 @@ function SuccessStep() {
   );
 }
 
-export default function SchedulePickupPage() {
+export default function SchedulePickupPage(): JSX.Element {
   const [data, setData] = useState(INITIAL_DATA);
-  const { steps, currentStepIndex, step, back, next } =
-    useMultiStepForm([
-      <Step1 key="step1" {...data} updateFields={updateFields} />,
-      <Step2 key="step2" {...data} updateFields={updateFields} />,
-      <Step3 key="step3" {...data} updateFields={updateFields} />,
-      <SuccessStep key="success" />,
-    ]);
+  const { steps, currentStepIndex, step, back, next } = useMultiStepForm([
+    <Step1 key="step1" {...data} updateFields={updateFields} />,
+    <Step2 key="step2" {...data} updateFields={updateFields} />,
+    <Step3 key="step3" {...data} updateFields={updateFields} />,
+    <SuccessStep key="success" />,
+  ]);
 
   function updateFields(fields: Partial<typeof INITIAL_DATA>) {
     setData((prev) => {

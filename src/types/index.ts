@@ -121,3 +121,12 @@ export interface ApiResponse<T = unknown> {
   error?: string;
   message?: string;
 }
+
+export interface PricingItem {
+  name: string;
+  price: number;
+  unit: string;
+}
+
+export type PricingData = Record<string, PricingItem>;
+export type PricingApiResponse = PricingData | PricingItem;

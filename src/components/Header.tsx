@@ -10,8 +10,6 @@ const Header = () => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
-
-
   useEffect(() => {
     setIsMounted(true);
     const handleScroll = () => {

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Layout from "../../components/Layout";
 import SEO from "../../components/SEO";
 import { allPosts } from "../../data/posts";
-import { BlogPost } from "../../types";
+import type { BlogPost } from "../../types";
 
 export const getStaticPaths: GetStaticPaths = async () => ({
   paths: allPosts.map((post) => ({ params: { slug: post.slug } })),
