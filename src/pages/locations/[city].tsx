@@ -1,190 +1,105 @@
-import { GetServerSideProps, NextPage } from "next";
-import Head from "next/head";
+// src/pages/locations/[city].tsx
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import { ParsedUrlQuery } from "querystring";
 import Layout from "@/components/Layout";
-import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import SEO from "@/components/SEO";
+import { locationsData, type LocationData } from "@/data/locations";
 
-// This is the same data from contact.tsx. In a real app, this would come from a database or CMS.
-const locations = [
-  {
-    id: "kl-tyler",
-    name: "K&L Recycling",
-    address: "4134 Chandler Highway, Tyler, TX 75702",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Industrial Pickup"],
-    coordinates: { lat: 32.3879, lng: -95.3344 },
-    isMain: true,
-  },
-  {
-    id: "houston-county",
-    name: "Houston County Scrap",
-    address: "403 South 2nd Street, Crockett, TX 75835",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Roll-off Containers"],
-    coordinates: { lat: 31.3143, lng: -95.4572 },
-    isMain: false,
-  },
-  {
-    id: "mineola",
-    name: "Mineola Iron & Metal",
-    address: "2590 Highway 80 West, Mineola, TX 75773",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Industrial Pickup"],
-    coordinates: { lat: 32.6515, lng: -95.5233 },
-    isMain: false,
-  },
-  {
-    id: "anderson-county",
-    name: "Anderson County Scrap",
-    address: "4340 State Highway 19, Palestine, TX 75801",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Demolition Services"],
-    coordinates: { lat: 31.8118, lng: -95.6483 },
-    isMain: false,
-  },
-  {
-    id: "nacogdoches",
-    name: "Nacogdoches Recycling Center",
-    address: "2508 Woden Road, Nacogdoches, TX 75961",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Roll-off Containers"],
-    coordinates: { lat: 31.5718, lng: -94.6293 },
-    isMain: false,
-  },
-  {
-    id: "premier",
-    name: "Premier Recyclers",
-    address: "1953 Highway 190 West, Jasper, TX 75951",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Car Crushing"],
-    coordinates: { lat: 30.9185, lng: -94.0252 },
-    isMain: false,
-  },
-  {
-    id: "jacksonville",
-    name: "Jacksonville Iron & Metal",
-    address: "599 CR 1520, Jacksonville, TX 75766",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Industrial Pickup"],
-    coordinates: { lat: 31.9963, lng: -95.2533 },
-    isMain: false,
-  },
-  {
-    id: "acme",
-    name: "Acme Scrap",
-    address: "700 Frey Street, Great Bend, KS 67530",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Car Crushing"],
-    coordinates: { lat: 38.3606, lng: -98.7745 },
-    isMain: false,
-  },
-  {
-    id: "madfos",
-    name: "Madfos Metals",
-    address: "10757 Highway 271, Tyler, TX 75708",
-    phone: "(800) 533-8081",
-    hours: "Mon-Fri: 7AM-5PM, Sat: 8AM-3PM",
-    services: ["Public Drop-off", "Industrial Pickup"],
-    coordinates: { lat: 32.4639, lng: -95.2119 },
-    isMain: false,
-  },
-];
+interface IParams extends ParsedUrlQuery {
+  city: string;
+}
 
-type Location = (typeof locations)[0];
+interface CityPageProps {
+  location: LocationData;
+}
 
-type LocationPageProps = {
-  location: Location;
-};
-
-const LocationPage: NextPage<LocationPageProps> = ({ location }) => {
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
-  });
-
-  const mapContainerStyle = {
-    width: "100%",
-    height: "400px",
-  };
-
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "RecyclingCenter",
-    name: location.name,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: location.address.split(", ")[0],
-      addressLocality: location.address.split(", ")[1],
-      addressRegion: location.address.split(", ")[2].split(" ")[0],
-      postalCode: location.address.split(", ")[2].split(" ")[1],
-      addressCountry: "US",
-    },
-    telephone: location.phone,
-    openingHours: location.hours,
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: location.coordinates.lat,
-      longitude: location.coordinates.lng,
-    },
-  };
+const CityPage: NextPage<CityPageProps> = ({ location }) => {
+  if (!location) {
+    return <div>Location not found.</div>;
+  }
 
   return (
     <Layout>
-      <Head>
-        <title>{`${location.name} - K&L Recycling`}</title>
-        <meta
-          name="description"
-          content={`Find ${location.name} in ${location.address}. We offer a variety of recycling services.`}
-        />
-        <script type="application/ld+json">
-          {JSON.stringify(localBusinessSchema)}
-        </script>
-      </Head>
-      <h1>{location.name}</h1>
-      <p>{location.address}</p>
-      <p>{location.phone}</p>
-      <p>{location.hours}</p>
-      <h2>Services</h2>
-      <ul>
-        {location.services.map((service) => (
-          <li key={service}>{service}</li>
-        ))}
-      </ul>
-      {isLoaded && (
-        <GoogleMap
-          mapContainerStyle={mapContainerStyle}
-          center={location.coordinates}
-          zoom={15}
-        >
-          <Marker position={location.coordinates} />
-        </GoogleMap>
-      )}
+      <SEO
+        title={location.city}
+        description={`Scrap metal recycling services in ${location.city}. View hours, contact info, and accepted materials.`}
+      />
+      <div className="bg-white py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4">
+              Recycling Services in {location.city}
+            </h1>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              {location.summary}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                Why Recycle in {location.city}?
+              </h2>
+              <p className="text-gray-700 leading-relaxed">
+                {location.benefits}
+              </p>
+            </div>
+            <div className="bg-gray-50 p-8 rounded-lg shadow-md">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">
+                Location Details
+              </h2>
+              <div className="space-y-3 text-gray-700">
+                <p>
+                  <strong>Address:</strong> {location.contact.address}
+                </p>
+                <p>
+                  <strong>Phone:</strong>{" "}
+                  <a
+                    href={location.contact.phoneHref}
+                    className="text-royal-blue-600 hover:underline"
+                  >
+                    {location.contact.phone}
+                  </a>
+                </p>
+                <p>
+                  <strong>Hours:</strong> {location.hours}
+                </p>
+              </div>
+              <h3 className="text-xl font-bold mt-6 mb-3 text-gray-800">
+                Accepted Materials
+              </h3>
+              <ul className="list-disc list-inside space-y-2 text-gray-700">
+                {location.materials.map((material: string) => (
+                  <li key={material}>{material}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </Layout>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const city = context.params?.city as string;
-  const location = locations.find((loc) => loc.id === city);
+export const getStaticPaths: GetStaticPaths = async () => {
+  const paths = Object.keys(locationsData).map((city) => ({
+    params: { city },
+  }));
+  return { paths, fallback: false };
+};
 
-  if (!location) {
-    return {
-      notFound: true,
-    };
+export const getStaticProps: GetStaticProps<CityPageProps, IParams> = async ({
+  params,
+}) => {
+  const city = params?.city;
+  if (!city || !locationsData[city as keyof typeof locationsData]) {
+    return { notFound: true };
   }
-
   return {
     props: {
-      location,
+      location: locationsData[city as keyof typeof locationsData],
     },
   };
 };
 
-export default LocationPage;
+export default CityPage;

@@ -2,11 +2,11 @@
 
 export const useRouter = () => {
   return {
-    route: '/',
-    pathname: '/',
+    route: "/",
+    pathname: "/",
     query: {},
-    asPath: '/',
-    basePath: '',
+    asPath: "/",
+    basePath: "",
     push: jest.fn(),
     replace: jest.fn(),
     reload: jest.fn(),

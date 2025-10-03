@@ -1,7 +1,7 @@
 const nextJest = require("next/jest");
 
 const createJestConfig = nextJest({
-  dir: "./"
+  dir: "./",
 });
 
 module.exports = createJestConfig({
@@ -11,7 +11,7 @@ module.exports = createJestConfig({
   testPathIgnorePatterns: [
     "<rootDir>/node_modules/",
     "<rootDir>/.next/",
-    "<rootDir>/src/pages/"
+    "<rootDir>/src/pages/",
   ],
   testMatch: ["<rootDir>/src/**/*.test.(ts|tsx)"],
   collectCoverage: true,
@@ -22,6 +22,6 @@ module.exports = createJestConfig({
     "src/pages/**/*.{ts,tsx}",
     "!src/pages/_*.{ts,tsx}",
     "!**/node_modules/**",
-    "!**/*.d.ts"
-  ]
+    "!**/*.d.ts",
+  ],
 });

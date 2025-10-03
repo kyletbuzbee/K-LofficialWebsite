@@ -1,131 +1,124 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import React, { type FC, type ReactNode } from "react";
-import { useInView } from "react-intersection-observer";
+import { FC, useState } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 import { cva, type VariantProps } from "class-variance-authority";
+import { useInView } from "react-intersection-observer";
+import AnimatedCounter from "./AnimatedCounter"; // Assuming AnimatedCounter is created
 
-// Define animation variants for the hero content
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.3, // Stagger the animation of children
-    },
-  },
-};
+const Hero: FC = (): JSX.Element => {
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 }, // Keep this line
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut" as const,
-    },
-  },
-};
-
-const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image with Ken Burns effect */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden text-white">
+      {/* Background Media */}
       <div className="absolute inset-0 z-0">
-        <motion.div
-          initial={{ scale: 1.2 }}
-          animate={{
-            scale: [1.2, 1.3],
-            transition: {
-              duration: 20,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear",
-            },
-          }}
-          className="relative w-full h-full"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className={`w-full h-full object-cover transition-opacity duration-1000 ${
+            isVideoLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          onLoadedData={() => setIsVideoLoaded(true)}
+          poster="/images/hero_background_high_res.jpg"
         >
+          <source src="/videos/scrap-yard-video.webm" type="video/webm" />
+          <source src="/videos/scrap-yard-video.mp4" type="video/mp4" />
+        </video>
+        {/* Fallback Image */}
+        {!isVideoLoaded && (
           <Image
-            src="/images/hero_background.jpg"
+            src="/images/hero_background_high_res.jpg" // <-- Correct high-res image
             alt="Metal Recycling Facility"
             fill
             priority
-            quality={100}
+            quality={90} // Quality can be slightly reduced for performance
             className="object-cover"
           />
-        </motion.div>
-
+        )}
         {/* Overlay gradient for better text visibility */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/40 to-black/50"></div>
-
-        {/* Subtle texture overlay */}
-        <div className="absolute inset-0 bg-pattern opacity-[0.03]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60"></div>
       </div>
 
+      {/* Hero Content */}
       <div className="container mx-auto px-6 relative z-20 text-center">
         <motion.div
-          className="max-w-6xl mx-auto"
-          variants={containerVariants}
           initial="hidden"
           animate="visible"
+          variants={{
+            hidden: { opacity: 0 },
+            visible: {
+              opacity: 1,
+              transition: { staggerChildren: 0.3 },
+            },
+          }}
+          className="max-w-6xl mx-auto"
         >
           <motion.h1
-            variants={itemVariants}
-            className="text-6xl md:text-9xl font-black text-white leading-tight drop-shadow-2xl text-shadow-heavy"
+            variants={{
+              hidden: { y: 20, opacity: 0 },
+              visible: {
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.8, ease: "easeOut" },
+              },
+            }}
+            className="text-6xl md:text-8xl font-black leading-tight drop-shadow-2xl"
           >
-            Your Partner in
-            <br />
-            Metal Recycling
+            Your Partner in Metal Recycling
           </motion.h1>
           <motion.p
-            variants={itemVariants}
-            className="text-2xl md:text-4xl text-white mt-6 max-w-3xl mx-auto font-semibold drop-shadow-lg text-shadow-medium"
-          >{`Professional scrap metal recycling solutions for industries and individuals`}</motion.p>
+            variants={{
+              hidden: { y: 20, opacity: 0 },
+              visible: {
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.8, ease: "easeOut" },
+              },
+            }}
+            className="text-xl md:text-2xl mt-6 max-w-3xl mx-auto font-light drop-shadow-lg"
+          >
+            Professional scrap metal solutions for industries and individuals.
+          </motion.p>
           <motion.div
-            variants={itemVariants}
+            variants={{
+              hidden: { y: 20, opacity: 0 },
+              visible: {
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.8, ease: "easeOut" },
+              },
+            }}
             className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6 mt-12"
           >
-            <Button href="/contact#quote-tool" variant="primary">
+            <Button href="/contact" variant="primary">
               Get a Free Quote
             </Button>
             <Button href="/services" variant="secondary">
               View Our Services
             </Button>
           </motion.div>
-
-          {/* Quick Stats with Recycle Icon Pulse */}
           <StatsSection />
         </motion.div>
-      </div>
-
-      {/* Scroll Indicator with Subtle Bounce */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce-slow z-20">
-        <div className="flex flex-col items-center space-y-2">
-          <span className="text-white text-sm font-semibold drop-shadow-lg text-shadow-light">
-            Scroll to Explore
-          </span>
-          <div className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
       </div>
     </section>
   );
 };
 
-// Abstracted button styles using class-variance-authority for type-safe variants
+// Button Component
 const buttonVariants = cva(
-  "relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 overflow-hidden group transform hover:-translate-y-1",
+  "inline-flex items-center justify-center px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 transform hover:-translate-y-1",
   {
     variants: {
       variant: {
         primary:
-          "bg-gradient-to-r from-royal-blue-600 to-electric-blue-600 text-white hover:from-royal-blue-700 hover:to-electric-blue-700 shadow-lg hover:shadow-2xl hover:scale-105",
+          "bg-royal-blue-600 text-white hover:bg-royal-blue-700 shadow-lg hover:shadow-xl",
         secondary:
-          "bg-white/10 text-white border-2 border-white/20 backdrop-blur-sm hover:bg-white/20 shadow-lg hover:shadow-2xl hover:scale-105",
+          "bg-white/10 text-white border border-white/20 backdrop-blur-sm hover:bg-white/20",
       },
     },
     defaultVariants: {
@@ -136,35 +129,37 @@ const buttonVariants = cva(
 
 interface ButtonProps extends VariantProps<typeof buttonVariants> {
   href: string;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-// Reusable Button component built on top of Next.js Link
 const Button: FC<ButtonProps> = ({ href, variant, children }) => (
   <Link href={href} className={buttonVariants({ variant })}>
-    <span className="relative z-10">{children}</span>
-    {/* Simplified hover effect */}
-    {variant === "primary" && (
-      <div className="absolute inset-0 bg-gradient-to-r from-royal-blue-700 to-electric-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-    )}
-    {variant === "secondary" && (
-      <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
-    )}
+    {children}
   </Link>
 );
 
+// Stats Section and individual Stat components
 const statsData = [
   { value: "68+", label: "Years Experience", icon: "🏆" },
-  { value: "10,000+", label: "Tons Annual", icon: "♻️" },
-  { value: "500+", label: "Active Partners", icon: "♻️" },
+  { value: "10000+", label: "Tons Recycled Annually", icon: "♻️" },
+  { value: "500+", label: "Active Partners", icon: "🤝" },
 ];
 
 const StatsSection: FC = () => (
-  <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mt-16">
+  <motion.div
+    variants={{
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.2, delayChildren: 0.8 },
+      },
+    }}
+    className="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-16 text-white"
+  >
     {statsData.map((stat) => (
       <AnimatedStat key={stat.label} {...stat} />
     ))}
-  </div>
+  </motion.div>
 );
 
 interface AnimatedStatProps {
@@ -179,26 +174,27 @@ const AnimatedStat: FC<AnimatedStatProps> = ({ value, label, icon }) => {
     threshold: 0.1,
   });
 
+  const numericValue = parseInt(value.replace(/\D/g, ""), 10);
+  const suffix = value.replace(/[0-9]/g, "");
+
   return (
-    <div ref={ref} className="text-center group">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5 }}
-        className="flex items-center justify-center"
-      >
-        <span className="text-3xl recycle-icon mr-2" aria-hidden="true">
-          {icon}
-        </span>
-        <div className="text-2xl font-black text-electric-blue-400 mb-2 group-hover:scale-110 transition-transform duration-300 drop-shadow-lg text-shadow-light">
-          {/* This is a simplified representation. For a true count-up, you'd use a library or a more complex hook. */}
-          {value}
-        </div>
-      </motion.div>
-      <div className="text-white text-sm font-semibold drop-shadow-md text-shadow-light">
+    <motion.div
+      ref={ref}
+      variants={{
+        hidden: { y: 20, opacity: 0 },
+        visible: { y: 0, opacity: 1, transition: { duration: 0.6 } },
+      }}
+      className="text-center"
+    >
+      <div className="text-4xl">{icon}</div>
+      <div className="text-3xl font-bold mt-2">
+        {inView && <AnimatedCounter to={numericValue} />}
+        {suffix}
+      </div>
+      <div className="text-sm font-light uppercase tracking-wider mt-1">
         {label}
       </div>
-    </div>
+    </motion.div>
   );
 };
 

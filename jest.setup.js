@@ -4,7 +4,7 @@ import "whatwg-fetch";
 // Suppress noisy console warnings
 const suppressedWarnings = [
   /Warning:.*not wrapped in act/,
-  /React has been loaded more than once/
+  /React has been loaded more than once/,
 ];
 
 const originalError = console.error;

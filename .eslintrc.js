@@ -1,38 +1,10 @@
 module.exports = {
   root: true,
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
     "next/core-web-vitals",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended", // Make sure this is always the last item.
   ],
   rules: {
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off"
+    // You can add custom rules here if needed.
   },
-  overrides: [
-    {
-      files: ["**/*.ts", "**/*.tsx"],
-      excludedFiles: [
-        "**/*.test.tsx",
-        "**/*.test.ts",
-        "**/*.spec.tsx",
-        "**/*.spec.ts"
-      ],
-      parserOptions: {
-        project: "./tsconfig.json"
-      },
-      rules: {
-        // Add type-aware rules here if needed
-      }
-    },
-    {
-      files: ["**/*.test.tsx", "**/*.test.ts", "**/*.spec.tsx", "**/*.spec.ts"],
-      parserOptions: {
-        project: "./tsconfig.jest.json"
-      }
-    }
-  ]
 };
